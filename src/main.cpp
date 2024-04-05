@@ -4,9 +4,9 @@
 #include "capteurs.h"
 #include <Adafruit_Sensor.h>
 
-const char *ssid = "UNIFI_IDO1";  // Nom du réseau WiFi
-const char *password = "41Bidules!";  // Mot de passe du réseau WiFi
-int status = WL_IDLE_STATUS; // Statut du module WiFi
+const char *ssid = "Tanatos";  // Nom du réseau WiFi
+const char *password = "Badtanatos2.0";  // Mot de passe du réseau WiFi
+int status = WL_IDLE_STATUS; // Sttut du module WiFi
 
 WiFiServer server(80);
 Capteurs capteurs(4, A0); // Exemple de broches, ajustez selon votre configuration
@@ -49,11 +49,12 @@ void loop() {
     client.println("Connection: close");
     client.println();
 
-    client.println("<!DOCTYPE html><html><head><title>Capteurs</title>");
+    client.println("<!DOCTYPE html><html><head><title>Projet version1</title>");
     client.println("<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.15.4/css/all.css'>");
     client.println("<style>");
     client.println("body { font-family: Arial, sans-serif; margin: 0; padding: 0; text-align: center; background-image: url('https://www.silvertouchtech.co.uk/wp-content/uploads/2020/05/iot-banner-1568x625.jpg'); background-size: cover; }");
-    client.println("h1 { color: #333; }");
+    client.println("h1 { color: black; margin: 50px; font-size: 50px;}");
+    client.println("h2 { font-size: 35px;}");
     client.println("p { color: #333; }");
     client.println(".temp-icon { color: orange; }"); // Couleur orange pour l'icône de température
     client.println(".humidity-icon { color: blue; }"); // Couleur bleue pour l'icône d'humidité
@@ -63,23 +64,26 @@ void loop() {
     client.println("</head><body>");
     client.println("<div style='display: flex; justify-content: center; align-items: center; height: 100vh;'>");
     client.println("<div>");
-    client.println("<h1>Donnees des capteurs:</h1>");
+    client.println("<h1> Systeme de surveillance de la qualite de l'air </h1>");
+    client.println("<h2>Donnees des capteurs:</h2>");
     client.println("<div class='data'>");
-    client.print("<p><i class='fas fa-thermometer-half icon temp-icon'></i> Temperature: ");
+    client.print("<p style='width: 210px; font-size: larger;background: #d1e8fd; padding: 12px; border-radius: 20px;'><i class='fas fa-thermometer-half icon temp-icon' style='font-size: 20px; padding-right: 5px;'></i> Temperature: ");
+    client.println("<span style='font-weight: bold;'>");
     client.print(capteurs.lireTemperature());
-    client.println(" °C</p>");
-    client.print("<p><i class='fas fa-tint icon humidity-icon'></i> Humidite: ");
+    client.println(" C</span></p>");
+    client.print("<p style='width: 200px; font-size: larger;background: #d1e8fd; padding: 12px; border-radius: 20px;'><i class='fas fa-tint icon humidity-icon' style='font-size: 20px; padding-right: 5px;'></i> Humidite: ");
+    client.println("<span style='font-weight: bold;'>");
     client.print(capteurs.lireHumidite());
-    client.println(" %</p>");
-    client.print("<p><i class='fas fa-fire icon gas-icon'></i> Niveau de Gaz: ");
+    client.println(" %</span></p>");
+    client.print("<p style='width: 240px; font-size: larger; background: #d1e8fd; padding: 12px; border-radius: 20px;'><i class='fas fa-fire icon gas-icon'' style='font-size: 20px; padding-right: 5px;'></i> Niveau de Gaz: ");
+    client.println("<span style='font-weight: bold;'>");
     client.print(capteurs.detecterGaz());
-    client.println(" %</p>");
+    client.println(" %</span></p>");
     client.println("</div>");
     client.println("</div>");
     client.println("</div>");
     client.println("</body></html>");
 
     client.stop();
-    Serial.println("Client deconnecte");
   }
 }
